@@ -2,6 +2,7 @@
 
 import { LoginFormValues, loginSchema } from "@/types/login";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -17,7 +18,15 @@ const Login: React.FC = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {};
+  const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
+    const result = await signIn("credentials", {
+      username: data.username,
+      password: data.password,
+      callbackUrl: "/dashboard",
+      redirect: true,
+    });
+    // console.log(result);
+  };
 
   return (
     <section className="relative z-10 overflow-hidden">

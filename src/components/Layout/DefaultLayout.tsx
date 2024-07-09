@@ -2,13 +2,19 @@
 import React, { useState, ReactNode } from "react";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
+import { usePathname } from "next/navigation";
 
 export default function DefaultLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const noLayoutPages = ["/login", "/"];
+  if (noLayoutPages.includes(pathname)) {
+    return <div>{children}</div>;
+  }
   return (
     <>
       {/* <!-- ===== Page Wrapper Start ===== --> */}
