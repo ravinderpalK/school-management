@@ -1,8 +1,6 @@
+import { isUserLoggedIn } from "@/db/queries/users";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials"
-import axios from "axios";
-import { isUserLoggedIn } from "@/lib/users";
-const API_URL = process.env.API_URL as String;
 
 export type User =  {
   id: string,

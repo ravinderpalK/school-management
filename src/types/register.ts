@@ -1,28 +1,31 @@
 import { z } from 'zod';
 
 //Register School
+
+
 export const registerSchoolSchema = z.object({
-    name: z.string()
-        .min(1, 'School Name is required')
-        .trim(),
-    address_1: z.string()
-        .min(1, 'Address is required')
-        .trim(),
-    address_2: z.string()
-        .min(1, 'Address is required')
-        .trim(),
-    city: z.string()
-        .min(1, 'City is required')
-        .trim(),
-    state: z.string()
-        .min(1, 'State is required')
-        .trim(),
-    pin: z.string()
-        .length(6, 'Pincode must be exactly 6 characters long')
-        .trim(),
-    udias_number: z.string()
-        .length(11, "UDIAS must be exactly 11 characters long")
-        .trim(),
+  name: z.string()
+      .min(1, 'School Name is required')
+      .trim(),
+  address_1: z.string()
+      .min(1, 'Address is required')
+      .trim(),
+  address_2: z.string()
+      .min(1, 'Address is required')
+      .trim(),
+  city: z.string()
+      .min(1, 'City is required')
+      .trim(),
+  state: z.string()
+      .min(1, 'State is required')
+      .trim(),
+  pincode: z.coerce.number()
+      .int()
+      .gte(100000, 'Pincode must be exactly 6 characters long')
+      .lte(999999, 'Pincode must be exactly 6 characters long'),
+  udise: z.string()
+      .length(11, "UDIAS must be exactly 11 characters long")
+      .trim(),
 });
 
 export type RegisterSchoolFormValues = z.infer<typeof registerSchoolSchema>;

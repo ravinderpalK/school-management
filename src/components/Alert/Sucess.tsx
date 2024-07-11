@@ -1,6 +1,6 @@
 const SuccessAlert: React.FC<{ message: string }> = ({ message }) => {
   return (
-    <div className="fixed top-22 right-5 flex border-l-6 border-[#34D399] bg-[#34D399] bg-opacity-[15%] shadow-md dark:bg-[#1B1B24] dark:bg-opacity-30 md:p-4">
+    <div className="fixed top-22 right-150 flex border-l-6 border-[#34D399] bg-[#34D399] bg-opacity-[15%] shadow-md dark:bg-[#1B1B24] dark:bg-opacity-30 md:p-4">
       <div className="mr-5 flex h-8 w-full max-w-8 items-center justify-center rounded-lg bg-[#34D399]">
         <svg
           width="12"

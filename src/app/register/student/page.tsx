@@ -1,8 +1,8 @@
-import RegisterStudents from "@/components/Register/RegisterStudents";
+import RegisterStudentsForm from "@/components/Register/RegisterStudentsForm";
 import { FC } from "react";
 
 const Student: FC = () => {
-  return <RegisterStudents />;
+  return <RegisterStudentsForm />;
 };
 
 export default Student;

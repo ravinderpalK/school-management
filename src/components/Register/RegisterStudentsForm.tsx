@@ -6,11 +6,12 @@ import {
   RegisterSchoolFormValues,
   registerSchoolSchema,
 } from "@/types/register";
-import axios from "axios";
+import { useSession } from "next-auth/react";
 import SuccessAlert from "../Alert/Sucess";
 import ErrorAlert from "../Alert/Error";
+import { addSchoolSecond } from "@/db/queries/test";
 
-const RegisterSchools: FC = () => {
+const RegisterStudentsForm: FC = () => {
   const [formStatus, setFormStatus] = useState<boolean | null>(null);
 
   const API_URL = process.env.API_URL as string;
@@ -23,19 +24,18 @@ const RegisterSchools: FC = () => {
     resolver: zodResolver(registerSchoolSchema),
   });
 
+  const { data: session } = useSession();
+
   const onSubmit: SubmitHandler<RegisterSchoolFormValues> = async (data) => {
-    axios
-      .post(`${API_URL}/school`, data)
-      .then((res) => {
-        console.log(res);
-        setFormStatus(true);
-        setTimeout(() => setFormStatus(null), 2000);
-        reset();
-      })
-      .catch((err) => {
-        setFormStatus(false);
-        setTimeout(() => setFormStatus(null), 2000);
-      });
+    const result = await addSchoolSecond(data);
+    if (result) {
+      setFormStatus(true);
+      setTimeout(() => setFormStatus(null), 2000);
+      reset();
+    } else {
+      setFormStatus(false);
+      setTimeout(() => setFormStatus(null), 2000);
+    }
   };
 
   return (
@@ -155,14 +155,16 @@ const RegisterSchools: FC = () => {
               Pincode
             </label>
             <input
-              type="text"
+              type="number"
               id="pincode"
               placeholder="Enter pincode"
               className="border-stroke focus:border-primary shadow-one w-full rounded-md border bg-transparent py-3 px-4 text-base text-body-color placeholder-body-color outline-none transition-all duration-300 focus:border-primary focus-visible:shadow-none"
-              {...register("pin")}
+              {...register("pincode", { valueAsNumber: true })}
             />
-            {errors.pin && (
-              <p className="mt-2 text-sm text-red-600">{errors.pin.message}</p>
+            {errors.pincode && (
+              <p className="mt-2 text-sm text-red-600">
+                {errors.pincode.message}
+              </p>
             )}
           </div>
           <div className="mb-8">
@@ -174,14 +176,14 @@ const RegisterSchools: FC = () => {
             </label>
             <input
               type="text"
-              id="udias_number"
+              id="udise"
               placeholder="Enter UDIAS number"
               className="border-stroke focus:border-primary shadow-one w-full rounded-md border bg-transparent py-3 px-4 text-base text-body-color placeholder-body-color outline-none transition-all duration-300 focus:border-primary focus-visible:shadow-none"
-              {...register("udias_number")}
+              {...register("udise")}
             />
-            {errors.udias_number && (
+            {errors.udise && (
               <p className="mt-2 text-sm text-red-600">
-                {errors.udias_number.message}
+                {errors.udise.message}
               </p>
             )}
           </div>
@@ -200,4 +202,4 @@ const RegisterSchools: FC = () => {
   );
 };
 
-export default RegisterSchools;
+export default RegisterStudentsForm;

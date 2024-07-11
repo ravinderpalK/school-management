@@ -1,4 +1,4 @@
-import db from "@/db/db";
+import db from "../db";
 
 export const isUserLoggedIn = async (data : {username : string, password : string}) => {
     const respone = await db.users.findUnique({
